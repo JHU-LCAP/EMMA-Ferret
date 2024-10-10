@@ -1,5 +1,5 @@
 # EMMA-Ferret
-Single stream EMMA framework used for Ferret Stimuli Analysis
+Single stream EMMA framework used for Ferret Stimuli Analysis. For detailed experiments and insights please read our [article](https://www.biorxiv.org/content/biorxiv/early/2024/06/11/2024.05.21.595171.full.pdf)
 
 ## Introduction
 This repository implements a computational model inspired by the Explicit Memory Multi-resolution Adaptive (EMMA) framework for speech segregation. The model is designed to explore and provide a framework for understanding the role of temporal coherence in segregating complex auditory scenes, as observed in biological experiments.
