@@ -23,7 +23,7 @@ To run this code, follow these steps:
 3. Set wandb_api_key in script train_model.py and run.
 4. For analysis scripts refer to the folder 'analysis'
 
-For pre trained model checkpoints and stimuli data please reach out to Karan Thakkar (kthakka2@jhu.edu)
+For pre trained model checkpoints and stimuli data please reach out to Karan Thakkar (kthakka2@jhu.edu) or Prof Elhilali (mounya@jhu.edu)
 
 ## References
 
