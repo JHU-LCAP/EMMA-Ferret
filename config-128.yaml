@@ -1,0 +1,91 @@
+
+
+## Main class for the model configuration contaning the general hyper parameters for the training of speech enhancement
+SE_Config:
+    SR : 16000
+    L_FRAME : 4096 #2048*2
+    L_HOP : 512
+    stage : 1
+    batchSize : 2
+    clean_files_dir : "/home/karan/sda_link/datasets/Ferret_data/Dataset_2/F_mixed_16KHz/"   #"/home/karan/datasets/ferret_dataset_direct_upload/F_mixed/"
+    noisy_files_dir : "/home/karan/sda_link/datasets/Ferret_data/Dataset_2/Mixed_16KHz/"      #"/home/karan/datasets/ferret_dataset_direct_upload/Mixed/"
+    clean_files_eval_dir : "/home/karan/sda_link/datasets/Ferret_data/Dataset_2/test_F_mixed_16KHz/"
+    noisy_files_eval_dir : "/home/karan/sda_link/datasets/Ferret_data/Dataset_2/test_Mixed_16KHz"
+    tuning_clean_files_dir : ""
+    tuning_noisy_files_dir : ""
+    
+    lay1_stream1_bestchkpt_path : ""
+    lay1_stream2_bestchkpt_path : "/home/karan/sda_link/GitHub/EMMA_Ferret_Train/checkpoint/EMMA_Ferret_3M/layer1-stream2/Stream2_epoch25000_MDY-3-25-2024_T-10-10.pt" #"/home/karan/sda_link/GitHub/EMMA_Ferret_Train/checkpoint_shifted/EMMA_Ferret_3M_shifted/layer1-stream2/Stream2_epoch25000_MDY-5-26-2024_T-5-58.pt"
+    lay1_stream3_bestchkpt_path : ""
+    lay1_bestchkpt_path : ""
+    
+    lay2_stream1_bestchkpt_path : ""
+    lay2_stream2_bestchkpt_path : ""
+    lay2_stream3_bestchkpt_path : ""
+    lay2_bestchkpt_path : ""
+    
+Coherence_Net_Config:
+    NAME : 'EMMA_Ferret_3M_shifted'
+    
+    ## Train Config
+    checkpoint_path : "checkpoint_shifted/"
+    LR : 0.0001
+    DECAY_RATE : 0.02
+    DECAY_STEP : 215000
+    FINAL_STEP : 250001
+    CKPT_STEP : 25000
+    
+    train_split : 0.99 # 90 percent 
+    
+    stream1_steps : 20 # the number of epochs 
+    stream2_steps : 20 # the number of epochs
+    stream3_steps : 20 # the number of epochs
+    stream_integerator_steps : 20 # the number of epochs
+    tuning_steps : 2 # the number of epochs for the tuninig
+    
+    ## Layer 1 Config
+    layer1:
+        num_layers : 2
+        num_streams_per_layer : 3    
+        
+        input_channels : 1   # The number of input channels
+        kernel_size : 3      # The kernel size for convolutions
+        embedding_dim : 128  # The embedding dim before the dcs
+        dcs_num_layers : 3   # number of conv layers in dcs 
+        dcs_output_dim : 128  # The output embedding of the dcs blocks
+        dcs_dilations : [3, 6, 9] # The dilations in the dcs block the length should be equal to the number of dcs layers
+        num_sources : 3      # The number of sources to sperate
+        freq_bins : 128     # the number of input freq bins
+        time_frames : 40     # The time frame of each input
+
+        max_pool_kernel : 2  # The max pool layer kernel 
+        max_pool_stride : 2  # The max pool layer stride
+
+        stream_integerator_input_channels : 1536 #num_streams_per_layer*(embedding_dim + dcs_num_layers*dcs_output_dim)
+        stream_integ_embedding : 96
+        
+        output_channels : 1
+    
+    ## Layer 2 Config
+    layer2:
+        num_layers : 2
+        num_streams_per_layer : 3
+        
+        kernel_size : 3      # The kernel size for convolutions
+        embedding_dim : 128  # The embedding dim before the dcs
+        dcs_num_layers : 3   # number of conv layers in dcs 
+        dcs_output_dim : 128  # The output embedding of the dcs blocks
+        dcs_dilations : [3, 6, 9] # The dilations in the dcs block the length should be equal to the number of dcs layers
+        num_sources : 3      # The number of sources to sperate
+        freq_bins : 128     # the number of input freq bins
+        time_frames : 40     # The time frame of each input
+
+        max_pool_kernel : 2  # The max pool layer kernel 
+        max_pool_stride : 2  # The max pool layer stride
+
+        stream_integerator_input_channels :  1536 #num_streams_per_layer*(embedding_dim + dcs_num_layers*dcs_output_dim) 
+        
+        input_channels : 1536  #num_streams_per_layer*(embedding_dim + dcs_num_layers*dcs_output_dim)  # The number of input channels to layer 2 
+        stream_integ_embedding : 96
+        
+        output_channels : 1
